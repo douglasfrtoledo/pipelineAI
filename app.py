@@ -3,6 +3,7 @@ from datetime import datetime, time
 from pydantic import ValidationError
 
 from contrato import Vendas
+from database import salvar_no_postgre
 
 def main():
     st.title("Sistema de CRM")
@@ -27,12 +28,8 @@ def main():
                 produto = produto
             )
         
-            st.write("Dados da venda:")
-            st.write(f"E-mail: {email}")
-            st.write(f"Data e hora: {data_hora}")
-            st.write(f"Valor: R$ {valor:.2f}")
-            st.write(f"Quantidade: {quantidade}")
-            st.write(f"Produto: {produto}")
+            st.write(venda)
+            salvar_no_postgre(venda)
 
         except ValidationError as e:
             st.error(f"Deu erro {e}")
